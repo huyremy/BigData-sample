@@ -2,6 +2,7 @@ from mpl_toolkits.basemap import Basemap
 import numpy as np
 import matplotlib.pyplot as plt
 import netCDF4
+import seaborn 
 
 plt.figure()
 url='https://nomads.ncep.noaa.gov/dods/wave/nww3/nww320210316/nww320210316_06z'
@@ -12,9 +13,9 @@ lon  = file.variables['lon'][:]
 data = file.variables['htsgwsfc'][1,:,:]
 file.close()
 
-m=Basemap(projection='mill',lat_ts=10,llcrnrlon=lon.min(), \
-  urcrnrlon=lon.max(),llcrnrlat=lat.min(),urcrnrlat=lat.max(), \
-  resolution='c')
+m = Basemap(width=12000000,height=9000000,projection='lcc',
+            resolution='c',lat_1=45.,lat_2=55,lat_0=50,lon_0=-107.)
+            
 x, y = m(*np.meshgrid(lon,lat))
 
 m.pcolormesh(x,y,data,shading='auto',cmap='Blues')
